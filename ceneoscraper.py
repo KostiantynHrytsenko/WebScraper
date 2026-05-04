@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 import json
 import os
 
@@ -14,9 +16,17 @@ headers={
     "Cookie":"sv3=1.0_5d2c42dc-3cbb-11f1-be91-3b6797ee5501; urdsc=2; userCeneo=ID=fd01e1b9-036f-4fe9-a79d-f504fcad8403; __RequestVerificationToken=cbcYw-Q-uW7vDGz-ckKFWDjwR62fthsjAgecHAp6BMkpiKYY4Z6j9An4Hv9OFBiIh2a4ET3dn65yA8tvlLJk33CoycAkxdYOdxULqjzS6pI1; st2=sref%3dhttps%3a%2f%2fwww.bing.com%2f%2c_t%3d63912295084%2cencode%3dtrue; ai_user=dJbZV|2026-04-20T13:18:05.733Z; __utmf=364726cdbe2e8437518b57e7b5f0d525_Dsgqi6QMc9CtX7buqOpcIw%3D%3D; ai_session=UFT16|1776691086272|1776691086272; appType=%7B%22Value%22%3A1%7D; cProdCompare_v2=; browserBlStatus=0; __rtbh.uid=%7B%22eventType%22%3A%22uid%22%2C%22id%22%3A%22unknown%22%2C%22expiryDate%22%3A%222027-04-20T13%3A18%3A07.548Z%22%7D; __rtbh.aid=%7B%22eventType%22%3A%22aid%22%2C%22id%22%3A%225d2c42dc-3cbb-11f1-be91-3b6797ee5501%22%2C%22expiryDate%22%3A%222027-04-20T13%3A18%3A07.548Z%22%7D; __rtbh.lid=%7B%22eventType%22%3A%22lid%22%2C%22id%22%3A%22oyN6XOjctxS85o4w3yup%22%2C%22expiryDate%22%3A%222027-04-20T13%3A18%3A07.549Z%22%7D; consentcookie=eyJBZ3JlZUFsbCI6bnVsbCwiQ29uc2VudHMiOlsxXSwiVENGQ29uc2VudERhdGEiOnsiPFB1cnBvc2VzPmtfX0JhY2tpbmdGaWVsZCI6W10sIjxTcGVjaWFsRmVhdHVyZXM+a19fQmFja2luZ0ZpZWxkIjpbXSwiPFZlbmRvcnM+a19fQmFja2luZ0ZpZWxkIjp7IjxDb25zZW50cz5rX19CYWNraW5nRmllbGQiOltdLCI8RGlzY2xvc2VkVmVuZG9ycz5rX19CYWNraW5nRmllbGQiOlsxLDQsOSwxMCwxMSwxMiwxMywxNSwxNiwyMiwyNCwyNSwyNywyOCwzMiwzNCwzNywzOSw0MCw0Miw0NCw1MCw1Miw1OSw2MCw2OCw3MCw3MSw3Niw3Nyw4MSw4Miw4NCw4NSw5MSw5Myw5NSw5Nyw5OCwxMDIsMTA5LDExMCwxMTUsMTIyLDEyNiwxMjksMTMwLDEzMiwxMzQsMTM5LDE0MCwxNDcsMTYxLDE2MywxNjgsMTkyLDE5MywxOTUsMjAyLDIxMywyMjYsMjI4LDI0MSwyNDMsMjQ2LDI1MywyNjQsMjczLDI3NSwyNzgsMjgxLDI4NCwyOTQsMzA0LDMxMiwzMTUsMzE3LDMyOCwzNDUsMzczLDM4MSwzODQsMzg4LDM5NCwzOTcsNDAyLDQxNSw0MTYsNDQ3LDQ1Miw0NjgsNDkzLDUxMiw1MzEsNTM0LDU0Niw1NTksNTg3LDYwNiw2MzAsNjMxLDY1Myw2NTcsNjY3LDcwMyw3MDcsNzIxLDczNCw3NTUsNzU4LDc1OSw3NjIsNzY3LDc3Miw3OTMsODA2LDgxMiw4MjcsODMyLDg0OCw4NTMsOTI5LDk2OSw5ODUsMTAyOSwxMDUxLDExMjZdLCI8TGVnaXRpbWF0ZUludGVyZXN0cz5rX19CYWNraW5nRmllbGQiOltdfX0sIlRDU3RyaW5nIjoiQ1FpOWowQVFpOWowQUd5QUJDUExDYkVnQUFBQUFBQUFBQjVZQUFBQUFBQUEuSUl6SkQ3QmJGTFVGQXdGaGpZS3NRTUlFVFVNQ0FBb1FBQUFhQkFDQUJRQUtRSUFRQ2trQVFCQVNnQkFBQ0FBQUFJQ1JCSVFBTUFBQUFDRUFBUUFBQUlBQUVBQUNRQVFBSUFBQUFnQUFRQUFBWUFBQWlBSUFBQUFBSWdBSUFFQUFBbVFoQUFBSUFFRUFBaEFBRUlBQUFBQUFBQUFBQUFnQUFBQUFDQUFJQUFBQUFBQ0FBQUlBQUFBQUFBQUFBQUJBIiwiVHJ1c3RlZFBhcnRuZXJzIjpbXSwiVmVyc2lvbiI6InYzIn0="
 
 }
+
+url= f"https://www.ceneo.pl/{product_code}/opinie-{page}"
+path_to_driver = "D:\\chromedriver-win64\\chromedriver.exe"
+s = Service(path_to_driver) 
+driver = webdriver.Chrome(service=s)
+driver.get(url)
+driver.maximize_window()
+driver.find_element(by="xpath", value="//*[@id='js_cookie-consent-general']/div/div[2]/button[1]").click()
+
 all_opinions=[]
 while next:
-    
     url= f"https://www.ceneo.pl/{product_code}/opinie-{page}"
     print(page,next,url)
     r=requests.get(url,headers=headers)
@@ -24,7 +34,7 @@ while next:
 
     page_dom=BeautifulSoup(r.text, 'html.parser')
 
-    # product_name=page_dom.select_one('h1').get_text()
+    product_name=page_dom.select_one('h1').get_text()
 
     opinions=page_dom.select('div.js_product-review:not(.user-post--highlight)')
 
@@ -47,6 +57,8 @@ while next:
         }
         # print(single_opinion)
         all_opinions.append(single_opinion)
+
+    # driver.find_element(by="xpath", value="//*[@id='reviews']/div/div[6]/button[4]").click()
 
 
     next = True if page_dom.select_one("button.pagination__next") else False
